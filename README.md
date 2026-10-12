@@ -6,7 +6,7 @@ An interactive robotic head that combines real-time facial emotion recognition, 
 
 - **Real-Time Face Detection:** Detects faces from a webcam using MediaPipe.
 - **Emotion Recognition:** Recognizes facial expressions using HSEmotion and DeepFace.
-- **Robotic Facial Expressions:** Controls servo motors to display happy, sad, neutral, angry, and surprised expressions.
+- **Robotic Facial Expressions:** Controls servo motors to display happy, sad and neutral expressions.
 - **Voice Assistant:** Supports speech recognition and text-to-speech responses.
 - **Gemini AI Integration:** Responds to user queries through conversational AI.
 - **Emotion-Based Music:** Plays music according to the detected emotion.
