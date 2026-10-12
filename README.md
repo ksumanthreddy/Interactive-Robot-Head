@@ -1,307 +1,107 @@
-# AI-Powered Emotion-Aware Music Recommendation System
+# Interactive Robotic Head
 
-## Overview
-
-This project is an AI-powered emotion detection and music recommendation system that analyzes a user's facial expressions in real time and plays music based on their detected emotional state. The system combines Computer Vision, Deep Learning, Speech Recognition, and Generative AI to create an interactive and personalized user experience.
-
-The application captures live video from a webcam, detects the user's face using MediaPipe, classifies emotions using a Deep Learning-based facial emotion recognition model, and automatically recommends songs that match the detected mood. Additionally, the system integrates Gemini AI for conversational interaction, allowing users to communicate with the assistant through voice commands.
-
-Still needed to extend the project by integrating with the sppech emotion recognitation so with the two results the emotion can be predcied some accurately.
-
----
+An interactive robotic head that combines real-time facial emotion recognition, Arduino-based servo control, voice interaction, Gemini AI, and emotion-based music playback.
 
 ## Features
 
-### Real-Time Emotion Detection
+- **Real-Time Face Detection:** Detects faces from a webcam using MediaPipe.
+- **Emotion Recognition:** Recognizes facial expressions using HSEmotion and DeepFace.
+- **Robotic Facial Expressions:** Controls servo motors to display happy, sad, neutral, angry, and surprised expressions.
+- **Voice Assistant:** Supports speech recognition and text-to-speech responses.
+- **Gemini AI Integration:** Responds to user queries through conversational AI.
+- **Emotion-Based Music:** Plays music according to the detected emotion.
+- **Facial Landmark Visualization:** Uses MediaPipe Face Mesh to detect and visualize facial landmarks.
 
-* Captures live webcam feed using OpenCV.
-* Detects faces using MediaPipe Face Detection.
-* Identifies emotions using a Deep Learning facial emotion recognition model.
-* Supports emotion categories:
+## Tech Stack
 
-  * Happiness
-  * Neutral
-  * Sadness
+- **Programming Languages:** Python, Arduino C++
+- **Computer Vision:** OpenCV, MediaPipe
+- **Emotion Recognition:** HSEmotion, DeepFace
+- **AI:** Google Gemini
+- **Speech Processing:** SpeechRecognition, pyttsx3
+- **Audio Playback:** Pygame
+- **Hardware Control:** Arduino, Servo motors
 
-### Emotion Smoothing
+## Hardware Configuration
 
-* Uses a moving average buffer to reduce prediction noise.
-* Provides stable and accurate emotion classification.
+The robotic head uses six servo motors connected to the Arduino.
 
-### Intelligent Music Recommendation
+| Facial Component | Arduino Pin |
+|---|---:|
+| Left Eye | 9 |
+| Right Eye | 10 |
+| Left Cheek | 11 |
+| Right Cheek | 12 |
+| Upper Jaw | 13 |
+| Lower Jaw | 6 |
 
-* Automatically selects songs based on detected emotion.
-* Organizes songs into separate folders for different moods.
-* Randomly chooses songs from the corresponding emotion playlist.
-* Supports:
+**Serial Communication:** 9600 baud
 
-  * MP3
-  * WAV
-  * OGG audio formats
+### Supported Arduino Commands
 
-### Voice-Based Interaction
+| Command | Expression |
+|---|---|
+| `H` | Happy |
+| `S` | Sad |
+| `N` | Neutral |
+| `A` | Angry |
+| `U` | Surprise |
 
-* Uses SpeechRecognition for voice command input.
-* Uses pyttsx3 for text-to-speech responses.
-* Allows hands-free interaction with the system.
+## Project Structure
 
-### Gemini AI Integration
+| File | Description |
+|---|---|
+| `Arduino.ino` | Controls the robotic head's servos and facial expressions. |
+| `emotion.py` | Performs webcam-based facial emotion recognition using DeepFace. |
+| `facecapture.py` | Detects faces and visualizes facial landmarks using MediaPipe Face Mesh. |
+| `interaction.py` | Implements voice interaction and Gemini AI responses. |
+| `songs.py` | Plays music based on a user-selected mood. |
+| `test.py` | Integrates emotion recognition, voice interaction, Gemini AI, and mood-based music playback. |
 
-* Integrates Google's Gemini API.
-* Maintains conversational memory through chat sessions.
-* Enables natural language conversations with users.
-* Provides intelligent responses beyond predefined commands.
+*Note: These Python files represent separate components and prototypes; their features are not automatically integrated into a single application.*
 
-### Interactive Controls
+## Installation
 
-* Voice command to start emotion detection.
-* Voice command to stop music playback.
-* Voice command to end the session.
-
-### Real-Time Visualization
-
-* Displays emotion probability scores using Matplotlib.
-* Shows live emotion confidence levels during detection.
-
----
-
-## System Architecture
-
-1. User provides webcam input.
-2. MediaPipe detects the face region.
-3. Facial image is extracted and passed to the emotion recognition model.
-4. Deep Learning model predicts emotion probabilities.
-5. Prediction smoothing is applied.
-6. Dominant emotion is selected.
-7. Appropriate song playlist is chosen.
-8. Music is played according to the detected mood.
-9. User can interact with the assistant through voice commands.
-10. Gemini AI handles conversational responses.
-
----
-
-## Technologies Used
-
-### Computer Vision
-
-* OpenCV
-* MediaPipe
-
-### Deep Learning
-
-* DeepFace / HSEmotionRecognizer
-* ONNX Runtime
-
-### Artificial Intelligence
-
-* Google Gemini API
-
-### Speech Processing
-
-* SpeechRecognition
-* pyttsx3
-
-### Data Processing
-
-* NumPy
-* Collections (Deque)
-
-### Visualization
-
-* Matplotlib
-
-### Audio Playback
-
-* Pygame Mixer
-
----
-
-##  Project Structure
-
-```text
-Emotion-Based-Music-Player/
-│
-├── emotion.py          # Emotion detection logic
-├── facecapture.py      # Webcam and face capture module
-├── interaction.py      # User interaction handling
-├── songs.py            # Song selection and playback
-├── test.py             # Main application entry point
-│
-├── songs/              # Music library
-│   ├── happy/
-│   ├── sad/
-│   ├── angry/
-│   ├── neutral/
-│   └── surprise/
-│
-├── .gitignore
-├── README.md
-└── venv/
-```
-
-##  Installation
-
-### 1. Clone the Repository
+Install the required Python packages:
 
 ```bash
-git clone https://github.com/yourusername/emotion-based-music-player.git
-cd emotion-based-music-player
+pip install opencv-python numpy mediapipe hsemotion-onnx deepface matplotlib pygame SpeechRecognition pyttsx3 python-dotenv google-genai pyserial
 ```
 
-### 2. Create Virtual Environment
+Install only the dependencies required by the component you intend to run.
 
-```bash
-python -m venv venv
+## Configuration
+
+1. Upload `Arduino.ino` to the Arduino using the Arduino IDE.
+2. Connect the servo motors according to the hardware configuration.
+3. Update the webcam index, serial port, and music-folder paths in the relevant Python files.
+4. Configure the Gemini API key in a `.env` file:
+
+```dotenv
+GEMINI_API_KEY=your_api_key_here
 ```
 
-### 3. Activate Virtual Environment
+Load the key using `load_dotenv()` and `os.getenv("GEMINI_API_KEY")`.
 
-#### Windows
+**Security:** Never commit API keys or `.env` files to GitHub. Revoke or rotate any API key previously exposed in source code.
 
-```bash
-venv\Scripts\activate
-```
+## Running the Project
 
-#### Linux / macOS
+Run the individual Python components as required:
 
 ```bash
-source venv/bin/activate
-```
-
-### 4. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-If you don't have a requirements file:
-
-```bash
-pip install opencv-python numpy pygame
-```
-
-Install any additional libraries required by your project.
-
-
-##  Running the Project
-
-Run the main file:
-
-```bash
+python emotion.py
+python facecapture.py
+python interaction.py
+python songs.py
 python test.py
 ```
 
-## Workflow
+## Future Improvements
 
-### Step 1: Voice Command
-
-The user activates the system using a voice command such as:
-
-"Capture my emotion"
-
-### Step 2: Face Detection
-
-MediaPipe detects the user's face from the webcam feed.
-
-### Step 3: Emotion Recognition
-
-The emotion recognition model analyzes facial expressions and predicts emotion probabilities.
-
-### Step 4: Emotion Stabilization
-
-Multiple predictions are averaged to reduce fluctuations.
-
-### Step 5: Mood Identification
-
-The dominant emotion is selected from:
-
-* Happy
-* Neutral
-* Sad
-
-### Step 6: Music Recommendation
-
-A song matching the detected emotion is selected and played automatically.
-
-### Step 7: AI Interaction
-
-The user can continue interacting with the Gemini-powered assistant through voice conversations.
-
----
-
-## Applications
-
-* Personalized music recommendation systems
-* Mental wellness assistants
-* Emotion-aware entertainment platforms
-* Human-computer interaction research
-* Smart home assistants
-* AI-powered companion systems
-
----
-
-## Future Enhancement: Multimodal Emotion Recognition
-
-The current system predicts user emotions primarily through facial expression analysis using Computer Vision techniques. While facial expressions provide valuable emotional cues, relying solely on visual information may not always produce the most accurate results due to variations in lighting conditions, facial occlusions, camera quality, and individual expression patterns.
-
-To improve emotion recognition accuracy, the system will be extended with **Speech Emotion Recognition (SER)**, creating a **Multimodal Emotion Recognition Framework**.
-
-### Planned Improvements
-
-#### Speech Emotion Recognition
-
-* Analyze vocal characteristics such as:
-
-  * Pitch
-  * Tone
-  * Energy
-  * Speaking rate
-  * Spectral features (MFCCs)
-* Classify emotions directly from the user's voice.
-
-#### Multimodal Emotion Fusion
-
-* Combine:
-
-  * Facial Emotion Recognition (FER)
-  * Speech Emotion Recognition (SER)
-
-* Use fusion techniques such as:
-
-  * Weighted averaging
-  * Confidence-based fusion
-  * Machine Learning ensemble models
-
-#### Enhanced Emotion Categories
-
-The extended system will support a wider range of emotions:
-
-* Happy
-* Sad
-* Neutral
-* Angry
-* Fear
-* Surprise
-* Disgust
-
-#### Improved Recommendation Engine
-
-Music recommendations will be generated using both facial and vocal emotional cues, resulting in more personalized and accurate mood-based song selection.
-
-### Expected Benefits
-
-* Higher emotion recognition accuracy
-* Better robustness under varying environmental conditions
-* Reduced false emotion predictions
-* Improved user experience
-* More personalized music recommendations
-* Stronger Human-AI interaction capabilities
-
-### Long-Term Vision
-
-The ultimate goal is to build a fully multimodal emotional AI assistant capable of understanding users through facial expressions, speech patterns, and conversational context, enabling emotionally intelligent and context-aware interactions.
-
-
-This project demonstrates the integration of Computer Vision, Deep Learning, Speech Processing, and Generative AI into a single intelligent application capable of understanding user emotions and delivering personalized experiences.
-
-### Still Working For Further Improvements...
+- Integrate emotion recognition directly with Arduino servo control in the main assistant.
+- Add talking and singing.
+- Improve transitions between facial expressions.
+- Enhance emotion classification and expression mapping.
+- Optimize real-time performance and hardware synchronization.
+ 
